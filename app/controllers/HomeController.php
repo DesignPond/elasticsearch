@@ -19,18 +19,30 @@ class HomeController extends BaseController {
 		{
 			$string = $grab->trim_all($element->innertext);
 
+			foreach($element->find('div[class=para]') as $table)
+			{
+				if(!empty($table->innertext) && $table->innertext != '&nbsp;')
+				{
+					$elements .= '<p>'.$table->innertext.'</p>';
+				}
+			}
+
+			foreach($element->find('table') as $tablerow)
+			{
+				$tablerow->outertext = null;
+			}
+
 			if(!empty($string))
 			{
-				foreach($element->find('table tr td') as $table){
-					$child = $grab->trim_all($table->innertext);
-					if(isset($child)){
-						$elements .= '<strong>'. $child .'</strong>';
-					}
-				}
+				foreach($element->find('img') as $image)
+					$elements .= '<img width="200px" src="'. $image->src .'">';
 
 				$elements .= '<p>'.$string.'</p>';
 			}
 		}
+
+		$elements = str_replace("<p>&nbsp;</p>", "", $elements);
+		$elements = str_replace("<p>&nbsp; </p>", "", $elements);
 
 		return View::make('index')->with(array('article' => $elements));
 	}
