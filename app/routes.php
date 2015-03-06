@@ -20,6 +20,7 @@ Route::get('elastic', function()
 /*
  * CREATE index
  *
+
     $indexParams['index']  = 'my_index';
     $result = Es::indices()->create($indexParams);
 */
