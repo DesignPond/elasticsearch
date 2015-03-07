@@ -18,10 +18,13 @@ class HomeController extends BaseController {
 
         foreach($html->find('div[id=content]') as $element)
         {
+
             foreach($element->find('div[id=toolbar]') as $tool)
             {
                 $tool->outertext = '';
             }
+
+            $thecontent = $element->innertext;
 
             // premabule
             $preambule = $element->find('div',1);
@@ -35,7 +38,6 @@ class HomeController extends BaseController {
             $i = 1;
             foreach($ancres as $ancre)
             {
-
 
                 $next = $ancre->next_sibling();
                 $no   = ['kopf','praeambel'];
@@ -102,7 +104,7 @@ class HomeController extends BaseController {
 
         }
 
-        return View::make('index')->with(array('article' => $premb, 'content' => $content));
+        return View::make('index')->with(array('article' => $premb, 'content' => $content, 'thecontent' => $thecontent ));
     }
 
     public function getSameSibling($element){

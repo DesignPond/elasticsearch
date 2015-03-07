@@ -14,6 +14,38 @@
 
 Route::get('/', array('as' => 'home', 'uses' => 'HomeController@index'));
 
+use Droit\Annotation\Repo\AnnotationInterface;
+
+Route::get('api/search', function()
+{
+    $url    = Input::get('uri');
+    $search = new \Droit\Annotation\Repo\AnnotationEloquent( new Droit\Annotation\Entities\Annotation );
+    $result = $search->findByUrl($url);
+    $annotations = [];
+
+    if(!$result->isEmpty())
+    {
+        foreach($result as $ann)
+        {
+            $annotations[] = unserialize($ann->annotations);
+        }
+    }
+
+    return Response::json( $annotations , 200 );
+});
+
+Route::post('api/annotations', function()
+{
+    $url    = Input::get('uri');
+    $data   = Input::all();
+
+    $model = new \Droit\Annotation\Repo\AnnotationEloquent( new Droit\Annotation\Entities\Annotation );
+    $result = $model->create(['annotations' => $data, 'url' => $url]);
+
+    return $result;
+});
+
+
 Route::get('elastic', function()
 {
 

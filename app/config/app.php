@@ -122,7 +122,9 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         'Shift31\LaravelElasticsearch\LaravelElasticsearchServiceProvider',
-        'Yangqi\Htmldom\HtmldomServiceProvider'
+        'Yangqi\Htmldom\HtmldomServiceProvider',
+        'Way\Generators\GeneratorsServiceProvider',
+        'Droit\DroitServiceProvider',
 	),
 
 	/*
