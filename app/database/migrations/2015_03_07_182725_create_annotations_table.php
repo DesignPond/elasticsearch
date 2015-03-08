@@ -15,12 +15,14 @@ class CreateAnnotationsTable extends Migration {
 		Schema::create('annotations', function(Blueprint $table)
 		{
 			$table->increments('id');
-            $table->longText('annotations');
-            $table->string('url');
+            $table->longText('text');
+            $table->longText('ranges');
+            $table->longText('tags');
+            $table->string('uri');
+            $table->text('quote');
 			$table->timestamps();
 		});
 	}
-
 
 	/**
 	 * Reverse the migrations.

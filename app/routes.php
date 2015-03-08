@@ -16,7 +16,7 @@ Route::get('/', array('as' => 'home', 'uses' => 'HomeController@index'));
 
 use Droit\Annotation\Repo\AnnotationInterface;
 
-Route::get('api/search', function()
+/*Route::get('api/search', function()
 {
     $url    = Input::get('uri');
     $search = new \Droit\Annotation\Repo\AnnotationEloquent( new Droit\Annotation\Entities\Annotation );
@@ -32,9 +32,12 @@ Route::get('api/search', function()
     }
 
     return Response::json( $annotations , 200 );
-});
+});*/
 
-Route::post('api/annotations', function()
+Route::get('api/search',array('uses' => 'AnnotationController@search'));
+Route::resource('api/annotations', 'AnnotationController');
+
+/*Route::post('api/annotations', function()
 {
     $url    = Input::get('uri');
     $data   = Input::all();
@@ -43,7 +46,7 @@ Route::post('api/annotations', function()
     $result = $model->create(['annotations' => $data, 'url' => $url]);
 
     return $result;
-});
+});*/
 
 
 Route::get('elastic', function()

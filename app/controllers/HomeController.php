@@ -171,4 +171,6 @@ class HomeController extends BaseController {
         return View::make('index')->with(array('article' => $elements));
     }
 
+
+
 }

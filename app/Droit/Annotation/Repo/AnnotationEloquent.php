@@ -12,26 +12,24 @@ class AnnotationEloquent implements AnnotationInterface{
         $this->annotation = $annotation;
     }
 
-    public function findByUrl($url){
+    public function findByUrl($uri){
 
-        return $this->annotation->where('url','=',$url)->get();
+        return $this->annotation->where('uri','=',$uri)->get();
     }
 
     public function find($id){
 
-        //return $this->annotation->with(array('annotation_arrets'))->findOrFail($id);
-    }
-
-    public function findyByImage($file){
-
-       // return $this->annotation->where('image','=',$file)->where('deleted', '=', 0)->get();
+        return $this->annotation->findOrFail($id);
     }
 
     public function create(array $data){
 
         $annotation = $this->annotation->create(array(
-            'url'         => $data['url'],
-            'annotations' => serialize($data['annotations']),
+            'uri'         => $data['uri'],
+            'text'        => $data['text'],
+            'quote'       => $data['quote'],
+            'tags'        => $data['tags'],
+            'ranges'      => serialize($data['ranges']),
             'created_at'  => date('Y-m-d G:i:s'),
             'updated_at'  => date('Y-m-d G:i:s')
         ));
@@ -54,13 +52,11 @@ class AnnotationEloquent implements AnnotationInterface{
             return false;
         }
 
-        $annotation->title      = $data['title'];
-        $annotation->ismain     = $data['ismain'];
-        $annotation->hideOnSite = $data['hideOnSite'];
-
-        if(!empty($data['image'])){
-            $annotation->image = $data['image'];
-        }
+        $annotation->uri    = $data['uri'];
+        $annotation->text   = $data['text'];
+        $annotation->quote  = $data['quote'];
+        $annotation->tags   = serialize($data['tags']);
+        $annotation->ranges = serialize($data['ranges']);
 
         $annotation->updated_at = date('Y-m-d G:i:s');
         $annotation->save();
@@ -70,9 +66,7 @@ class AnnotationEloquent implements AnnotationInterface{
 
     public function delete($id){
 
-        $annotation = $this->annotation->find($id);
-
-        return $annotation->delete();
+        return  $this->annotation->delete($id);
     }
 
 }

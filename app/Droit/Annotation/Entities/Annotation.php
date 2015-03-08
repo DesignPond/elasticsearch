@@ -2,7 +2,7 @@
 
 class Annotation extends \Eloquent {
 
-	protected $fillable = ['url','annotations'];
+	protected $fillable = ['uri','text','ranges','quote'];
 
     public static $rules = array();
     public static $messages = array();
