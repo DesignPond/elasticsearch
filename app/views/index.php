@@ -16,8 +16,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script src="<?php echo asset('js/annotator-full.min.js');?>"></script>
 
+    <script src="<?php echo asset('js/jquery-i18n-master/jquery.i18n.min.js');?>"></script>
     <script src="<?php echo asset('js/color.js');?>"></script>
-
+    <script src="<?php echo asset('js/view_annotator.js');?>"></script>
+    <script src="<?php echo asset('js/categories.js');?>"></script>
     <script src="<?php echo asset('js/jquery.expose.js');?>"></script>
 
     <style type="text/css">
@@ -49,7 +51,6 @@
 
         $(function(){
 
-
             $("#annexe").click(function(e) {
                 e.preventDefault();
                 var $test = $('#annexe-text'), o = $test.offset().top;
@@ -68,21 +69,34 @@
 
 
             var url  = location.protocol + "//" + location.host+"/";
-
+            //$.i18n.load(i18n_dict);
             var content = $('#content').annotator();
 
+            content.annotator('addPlugin','Permissions', {
+                user: 1,
+                permissions: {
+                    'read':   [],
+                    'update': [],
+                    'delete': [],
+                    'admin':  []
+                },
+                showViewPermissionsCheckbox: true,
+                showEditPermissionsCheckbox: false
+            });
+
+            /*
             content.annotator('addPlugin','Color', 'Hello World');
             content.annotator('addPlugin','Tags');
+            var availableTags = ["Loi", "Acte", "Visa",];
+            content.data('annotator').plugins.Tags.input.autocomplete({source: availableTags});
+            */
 
-            var availableTags = [
-                "Loi",
-                "Acte",
-                "Visa",
-            ];
-
-            content.data('annotator').plugins.Tags.input.autocomplete({
-                source: availableTags
+            content.annotator('addPlugin','Categories',{
+                errata:'annotator-hl-errata',
+                destacat:'annotator-hl-destacat',
+                subratllat:'annotator-hl-subratllat'
             });
+
 
             //content.annotator('addPlugin', 'Categories');
             //content.annotator('addPlugin', 'MarginViewer');
